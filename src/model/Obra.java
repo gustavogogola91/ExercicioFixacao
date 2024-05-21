@@ -57,4 +57,9 @@ public class Obra {
         this.localizacao = localizacao;
     }
 
+    @Override
+    public String toString() {
+        return titulo + ", " + artista + ", " + anoCriacao + ", " + tipo + ", " + localizacao;
+    }
+
 }
