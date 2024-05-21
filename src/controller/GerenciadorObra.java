@@ -37,5 +37,31 @@ public class GerenciadorObra {
         return lista;
     }
 
+    public static void alterarTitulo(String tituloAntigo, String novoTitulo) throws Exception {
 
+        Obra obra = buscarObra(tituloAntigo);
+
+        obra.setTitulo(novoTitulo);
+    }
+
+    public static void alterarArtista(String titulo, String novoArtista) throws Exception {
+
+        Obra obra = buscarObra(titulo);
+
+        obra.setArtista(novoArtista);
+    }
+
+    public static void alterarAnoCriacao(String titulo, int novoAno) throws Exception {
+
+        Obra obra = buscarObra(titulo);
+
+        obra.setAnoCriacao(novoAno);
+    }
+
+    public static void alterarLocalizacao(String titulo, String novaLocalizacao) throws Exception {
+
+        Obra obra = buscarObra(titulo);
+
+        obra.setLocalizacao(novaLocalizacao);
+    }
 }
