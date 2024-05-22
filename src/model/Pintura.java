@@ -1,7 +1,5 @@
 package model;
 
-import controller.GerenciadorObra;
-
 public class Pintura extends Obra {
 
     String tipo;
