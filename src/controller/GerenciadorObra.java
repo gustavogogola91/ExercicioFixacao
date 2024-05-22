@@ -28,16 +28,101 @@ public class GerenciadorObra {
         throw new Exception("Não há obras com este nome");
     }
 
-    public static void excluirObra(String titulo) throws Exception {
+    public static ArrayList<Obra> buscarObraComFiltro(String artista) throws Exception {
 
-        Obra obra = buscarObra(titulo);
+        ArrayList<Obra> listaFiltrada = new ArrayList<Obra>();
 
-        lista.remove(obra);
+        for (Obra obra : lista) {
+            if (obra.getArtista().equals(artista)) {
+                lista.add(obra);
+            }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            throw new Exception("Nenhuma obra do artista " + artista + " cadastrada");
+        }
+
+        return listaFiltrada;
+    }
+
+    public static ArrayList<Obra> buscarObraComFiltro(int anoCriacao) throws Exception {
+
+        ArrayList<Obra> listaFiltrada = new ArrayList<Obra>();
+
+        for (Obra obra : lista) {
+            if (obra.getAnoCriacao() == anoCriacao) {
+                lista.add(obra);
+            }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            throw new Exception("Nenhuma obra do ano " + anoCriacao + " cadastrada");
+        }
+
+        return listaFiltrada;
+    }
+
+    public static ArrayList<Obra> buscarPinturas()  throws Exception {
+        
+        ArrayList<Obra> listaFiltrada = new ArrayList<Obra>();
+
+        for (Obra obra : lista) {
+            if (obra instanceof Pintura) {
+                lista.add(obra);
+            }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            throw new Exception("Nenhuma pintura cadastrada");
+        }
+
+        return listaFiltrada;
+    }
+
+    public static ArrayList<Obra> buscarFotografia()  throws Exception {
+        
+        ArrayList<Obra> listaFiltrada = new ArrayList<Obra>();
+
+        for (Obra obra : lista) {
+            if (obra instanceof Fotografia) {
+                lista.add(obra);
+            }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            throw new Exception("Nenhuma fotografia cadastrada");
+        }
+
+        return listaFiltrada;
+    }
+
+    public static ArrayList<Obra> buscarEscultura()  throws Exception {
+        
+        ArrayList<Obra> listaFiltrada = new ArrayList<Obra>();
+
+        for (Obra obra : lista) {
+            if (obra instanceof Escultura) {
+                lista.add(obra);
+            }
+        }
+
+        if (listaFiltrada.isEmpty()) {
+            throw new Exception("Nenhuma escultura cadastrada");
+        }
+
+        return listaFiltrada;
     }
 
     public static ArrayList<Obra> listarTodas() {
 
         return lista;
+    }
+
+    public static void excluirObra(String titulo) throws Exception {
+
+        Obra obra = buscarObra(titulo);
+
+        lista.remove(obra);
     }
 
     public static void alterarTitulo(String tituloAntigo, String novoTitulo) throws Exception {
@@ -82,21 +167,20 @@ public class GerenciadorObra {
         }
     }
 
-    public static void recuperarDados() throws IOException, Exception{
+    public static void recuperarDados() throws IOException, Exception {
 
         try (FileReader fr = new FileReader(ARQUIVO); BufferedReader br = new BufferedReader(fr)) {
-            
-            String linha;
-            
 
-            while((linha = br.readLine()) != null) {
+            String linha;
+
+            while ((linha = br.readLine()) != null) {
                 Obra tempObra;
 
-                if(linha.startsWith("Pintura")) {
+                if (linha.startsWith("Pintura")) {
                     tempObra = Pintura.fromString(linha);
-                } else if(linha.startsWith("Fotografia")) {
-                    tempObra = Fotografia.fromString(linha);    
-                } else if(linha.startsWith("Escultura")) {
+                } else if (linha.startsWith("Fotografia")) {
+                    tempObra = Fotografia.fromString(linha);
+                } else if (linha.startsWith("Escultura")) {
                     tempObra = Escultura.fromString(linha);
                 } else {
                     throw new Exception("Erro de dados para inicialização");
@@ -105,6 +189,6 @@ public class GerenciadorObra {
                 adicionarObra(tempObra);
             }
 
-        } 
+        }
     }
 }
