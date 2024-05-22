@@ -3,7 +3,7 @@ package controller;
 import java.io.*;
 import java.util.ArrayList;
 
-import model.Obra;
+import model.*;
 
 public class GerenciadorObra {
 
@@ -82,15 +82,25 @@ public class GerenciadorObra {
         }
     }
 
-    public static void recuperarDados() throws IOException{
+    public static void recuperarDados() throws IOException, Exception{
 
         try (FileReader fr = new FileReader(ARQUIVO); BufferedReader br = new BufferedReader(fr)) {
             
             String linha;
+            
 
             while((linha = br.readLine()) != null) {
+                Obra tempObra;
 
-                Obra tempObra = Obra.fromString(linha);
+                if(linha.startsWith("Pintura")) {
+                    tempObra = Pintura.fromString(linha);
+                } else if(linha.startsWith("Fotografia")) {
+                    tempObra = Fotografia.fromString(linha);    
+                } else if(linha.startsWith("Escultura")) {
+                    tempObra = Escultura.fromString(linha);
+                } else {
+                    throw new Exception("Erro de dados para inicialização");
+                }
 
                 adicionarObra(tempObra);
             }
