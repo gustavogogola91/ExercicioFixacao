@@ -11,6 +11,13 @@ public class GerenciadorObra {
 
     private static final File ARQUIVO = new File("src/dataBase/obras.txt");
 
+    public static boolean listaVazia() throws Exception{
+        if(lista.isEmpty()) {
+            throw new Exception("Nenhuma obra cadastrada\n");
+        }
+        return false;
+    }
+
     public static void adicionarObra(Obra obra) {
 
         lista.add(obra);
@@ -38,7 +45,7 @@ public class GerenciadorObra {
             }
         }
 
-        if (listaFiltrada.isEmpty()) {
+        if (listaFiltrada.get(0) == null) {
             throw new Exception("Nenhuma obra do artista " + artista + " cadastrada");
         }
 
@@ -79,7 +86,7 @@ public class GerenciadorObra {
         return listaFiltrada;
     }
 
-    public static ArrayList<Obra> buscarFotografia()  throws Exception {
+    public static ArrayList<Obra> buscarFotografias()  throws Exception {
         
         ArrayList<Obra> listaFiltrada = new ArrayList<Obra>();
 
@@ -96,7 +103,7 @@ public class GerenciadorObra {
         return listaFiltrada;
     }
 
-    public static ArrayList<Obra> buscarEscultura()  throws Exception {
+    public static ArrayList<Obra> buscarEsculturas()  throws Exception {
         
         ArrayList<Obra> listaFiltrada = new ArrayList<Obra>();
 
@@ -113,8 +120,11 @@ public class GerenciadorObra {
         return listaFiltrada;
     }
 
-    public static ArrayList<Obra> listarTodas() {
+    public static ArrayList<Obra> listarTodas() throws Exception {
 
+        if (lista.isEmpty()) {
+            throw new Exception("Nenhuma obra cadastrada");
+        }
         return lista;
     }
 
@@ -123,6 +133,8 @@ public class GerenciadorObra {
         Obra obra = buscarObra(titulo);
 
         lista.remove(obra);
+
+        salvarObras();
     }
 
     public static void alterarTitulo(String tituloAntigo, String novoTitulo) throws Exception {
@@ -159,7 +171,7 @@ public class GerenciadorObra {
             throw new Exception("Nenhuma obra cadastrada");
         }
 
-        try (FileWriter fw = new FileWriter(ARQUIVO, true); BufferedWriter bw = new BufferedWriter(fw)) {
+        try (FileWriter fw = new FileWriter(ARQUIVO); BufferedWriter bw = new BufferedWriter(fw)) {
 
             for (Obra obra : lista) {
                 bw.write(obra.toString());
