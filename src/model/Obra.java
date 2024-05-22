@@ -8,8 +8,6 @@ public class Obra {
     protected String tipo; // TODO: alterar para herança
     protected String localizacao;
 
-    
-
     public Obra(String titulo, String artista, int anoCriacao, String localizacao) {
         this.titulo = titulo;
         this.artista = artista;
@@ -60,6 +58,13 @@ public class Obra {
     @Override
     public String toString() {
         return titulo + ", " + artista + ", " + anoCriacao + ", " + tipo + ", " + localizacao;
+    }
+
+    public static Obra fromString(String linha) {
+
+        String[] dados = linha.split(", ");
+
+        return new Obra(dados[0], dados[1], Integer.parseInt(dados[2]), dados[3]);
     }
 
 }

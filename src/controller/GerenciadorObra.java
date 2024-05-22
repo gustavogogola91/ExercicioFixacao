@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.*;
 import java.util.ArrayList;
 
 import model.Obra;
@@ -7,6 +8,8 @@ import model.Obra;
 public class GerenciadorObra {
 
     private static ArrayList<Obra> lista = new ArrayList<Obra>();
+
+    private static final File ARQUIVO = new File("src/dataBase/obras.txt");
 
     public static void adicionarObra(Obra obra) {
 
@@ -63,5 +66,35 @@ public class GerenciadorObra {
         Obra obra = buscarObra(titulo);
 
         obra.setLocalizacao(novaLocalizacao);
+    }
+
+    public static void salvarObras() throws IOException, Exception {
+
+        if (lista.isEmpty()) {
+            throw new Exception("Nenhuma obra cadastrada");
+        }
+
+        try (FileWriter fw = new FileWriter(ARQUIVO, true); BufferedWriter bw = new BufferedWriter(fw)) {
+
+            for (Obra obra : lista) {
+                bw.write(obra.toString());
+            }
+        }
+    }
+
+    public static void recuperarDados() throws IOException{
+
+        try (FileReader fr = new FileReader(ARQUIVO); BufferedReader br = new BufferedReader(fr)) {
+            
+            String linha;
+
+            while((linha = br.readLine()) != null) {
+
+                Obra tempObra = Obra.fromString(linha);
+
+                adicionarObra(tempObra);
+            }
+
+        } 
     }
 }
