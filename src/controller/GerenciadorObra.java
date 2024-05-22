@@ -134,7 +134,13 @@ public class GerenciadorObra {
 
         lista.remove(obra);
 
-        salvarObras();
+        if(lista.isEmpty()) {
+            resetList();
+        } else {
+
+            salvarObras();
+        }
+
     }
 
     public static void alterarTitulo(String tituloAntigo, String novoTitulo) throws Exception {
@@ -177,6 +183,15 @@ public class GerenciadorObra {
                 bw.write(obra.toString());
             }
         }
+    }
+
+    public static void resetList() throws IOException {
+
+        try (FileWriter fw = new FileWriter(ARQUIVO); BufferedWriter bw = new BufferedWriter(fw)) {
+
+            bw.write("");
+        }
+
     }
 
     public static void recuperarDados() throws IOException, Exception {
